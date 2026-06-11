@@ -1,0 +1,7 @@
+{
+  "condition": "C (deterministic only)",
+  "model": "none (swa lint)",
+  "total_findings": 12,
+  "valid_extra_findings": 0,
+  "matched": ["GT-04", "GT-05", "GT-12", "GT-17", "GT-18"]
+}

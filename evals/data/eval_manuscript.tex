@@ -1,0 +1,133 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+
+\begin{document}
+
+\title{An Efficient Coupling Of Nonlocal And Local Models For Fracture Simulation}
+\author{Anonymous}
+\maketitle
+
+\begin{abstract}
+Our adaptive coupling scheme reduces the ghost-force error by two orders of
+magnitude compared to standard overlapping-domain approaches. The scheme uses
+a blending function with compact support whose gradient is bounded by the
+inverse of the transition-zone width, combined with a variable-horizon
+formulation in which the nonlocal weight kernel is rescaled according to the
+local grid spacing. We also describe our new mesh generator and a database
+format for storing simulation results. Numerical experiments demonstrate the
+performance of the method.
+\end{abstract}
+
+\section{Introduction}
+
+Fracture is one of the most important failure modes of engineering
+structures. Classical continuum mechanics describes the deformation of solids
+by partial differential equations, which assume a continuous displacement
+field. Cracks introduce discontinuities, which makes the application of
+classical methods difficult. Nonlocal models such as peridynamics replace
+spatial derivatives by integrals and can therefore represent discontinuities
+naturally.
+
+However, nonlocal models are computationally expensive. A natural idea is to
+use the nonlocal model only near the crack and a classical local model
+everywhere else. Such coupling schemes have been studied extensively in the
+literature. A well known problem of coupling schemes are ghost forces, which
+are spurious forces that appear in the transition zone even under uniform
+deformation.
+
+The structure of this paper is as follows. Section 2 presents the coupling
+formulation. Section 3 discusses the discretization. Section 4 presents
+numerical results, and Section 5 concludes.
+
+\section{Coupling formulation}
+
+We consider a body $\Omega$ subjected to body forces. In the local
+subdomain the deformation is governed by
+\begin{equation}
+\nabla \cdot \boldsymbol{\sigma} + \mathbf{b} = \rho \ddot{\mathbf{u}},
+\label{eq:local}
+\end{equation}
+where $\boldsymbol{\sigma}$ denotes the Cauchy stress tensor and $\mathbf{u}$
+the displacement field. In the nonlocal subdomain we employ the peridynamic
+equation of motion
+\begin{equation}
+\rho \ddot{\mathbf{u}}(\mathbf{x},t) = \int_{H_\mathbf{x}}
+\mathbf{f}(\mathbf{u}'-\mathbf{u}, \mathbf{x}'-\mathbf{x})\, dV' +
+\mathbf{b}(\mathbf{x},t),
+\label{eq:pd}
+\end{equation}
+where $H_\mathbf{x}$ is the neighborhood of point $\mathbf{x}$ with radius
+$\delta$.
+
+The two models are blended by a function $\alpha(\mathbf{x})$ that varies
+from zero to one across the transition zone of width $\ell$. The coupled
+internal force is
+\begin{equation}
+\mathbf{F}_{int} = \alpha \, \mathbf{F}^{PD}_{int} + (1-\alpha)\,
+\mathbf{F}^{FE}_{int} + \boldsymbol{\Psi}(\alpha, \kappa).
+\label{eq:blend}
+\end{equation}
+
+We initially attempted to enforce the coupling by Lagrange multipliers on the
+interface displacements. This approach required the solution of a saddle
+point system in every time step and showed oscillations in the multiplier
+field for fine meshes. We then experimented with a penalty formulation, which
+avoided the saddle point structure but introduced a penalty parameter whose
+calibration proved difficult; for large values the time step size had to be
+reduced drastically, while for small values the interface constraint was
+violated. After these attempts we finally adopted the blending approach
+described above, which does not require interface constraints at all.
+
+Note that the material is nonlinear up to a point, the yield strength, which
+is a sharp kink in the stress curve. Beyond this kink the response is
+governed by the hardening modulus.
+
+\section{Discretization}
+
+The local subdomain is discretized by standard finite elements, the nonlocal
+subdomain by a meshfree collocation of the peridynamic equation. In the
+transition zone the interaction radius $\varepsilon$ of each collocation
+point is rescaled proportionally to the local element size in order to
+guarantee a smooth transition of the discretization parameters.
+
+The time integration uses an explicit central difference scheme. The critical
+time step size follows from the smallest element and the dilatational wave
+speed $c_d$.
+
+\section{Numerical results}
+
+\subsection{Validation against analytical solutions}
+
+We first validate the implementation against the analytical solution of a
+one dimensional bar under static load. Figure 1 shows the displacement error
+as a function of the the grid spacing on a linear scale. The error decreases
+quickly with grid refinement and the method converges very well. The
+agreement between the numerical and the analytical solution is excellent.
+
+\subsection{Crack branching}
+
+Next we simulate dynamic crack branching in a pre-notched glass plate. The
+simulation was performed with a time step of $\Delta t = 25\,$ns for the
+coarse grid and, due to stability requirements that emerged during the
+study, with $\Delta t = 10\,$ns for the two finer grids. The branching
+pattern agrees well with the experiment. Figure 2 shows the crack paths,
+where the simulated crack path and the experimentally observed path are
+plotted as two solid blue lines.
+
+\subsection{Performance}
+
+Finally, we compare the computational cost of the coupled scheme with a
+fully nonlocal simulation. The coupled scheme is significantly faster while
+the accuracy is much better than that of the overlapping Schwarz approach.
+
+\section{Conclusion}
+
+In order to enable efficient fracture simulations, we have presented a
+coupling scheme for nonlocal and local models. The presented scheme avoids
+ghost forces by construction, since the blending function compensates the
+spurious force terms exactly. Future work will address the extension to
+three dimensions, corrosion problems, fatigue, thermal coupling, contact,
+and the application to additively manufactured lattice structures.
+
+\end{document}

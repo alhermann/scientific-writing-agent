@@ -208,17 +208,32 @@ _TITLE_SMALL_WORDS = {"a", "an", "the", "of", "for", "and", "or", "in", "on",
                       "with", "to", "via", "by", "from"}
 
 
+_TEX_TITLE = re.compile(r"\\title\s*\{([^}]*)\}")
+
+
+def _looks_title_case(words: list[str]) -> bool:
+    """Two or more capitalized non-small words after the first word."""
+    caps = [w for w in words[1:]
+            if _TITLE_CASE_WORD.fullmatch(w) and w.lower() not in _TITLE_SMALL_WORDS]
+    return len(caps) >= 2
+
+
 @register("LG-4", "minor")
 def check_heading_case(ms, rule_id, severity):
-    for s in ms.sections:
-        words = s.title.split()
+    titles = [(s.title, s.start_line) for s in ms.sections]
+    if ms.fmt == "latex":
+        for m in _TEX_TITLE.finditer(ms.text):
+            titles.insert(0, (m.group(1).strip(),
+                              ms.text[: m.start()].count("\n") + 1))
+    for title, start_line in titles:
+        words = title.split()
         if len(words) < 2:
             continue
         caps = [w for w in words[1:]
-                if _TITLE_CASE_WORD.fullmatch(w) and w.lower() not in _TITLE_SMALL_WORDS]
-        if len(caps) >= 2:  # looks like Title Case
-            yield Finding(rule_id, severity, s.start_line, s.title,
-                          f'Heading appears to use Title Case: "{s.title}"',
+                if _TITLE_CASE_WORD.fullmatch(w) and w.lower() in _TITLE_SMALL_WORDS]
+        if len(caps) >= 1 or _looks_title_case(words):
+            yield Finding(rule_id, severity, start_line, title,
+                          f'Heading appears to use Title Case: "{title}"',
                           suggestion="Use sentence case: capitalize only the first "
                                      "word and names.",
                           confidence="candidate")
