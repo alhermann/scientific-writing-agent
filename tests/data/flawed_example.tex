@@ -1,0 +1,95 @@
+% Intentionally flawed example manuscript for testing the deterministic checks.
+% Every flaw below is annotated with the rule it violates.
+\documentclass{article}
+\begin{document}
+
+\title{A Novel Framework For Advanced Simulation Of Materials}  % LG-4: Title Case
+\maketitle
+
+\begin{abstract}
+In order to simulate the the mechanical behavior of magnesium alloys under
+complex loading conditions, we present a comprehensive computational framework
+based on a state based peridynamic formulation combined with machine learning
+surrogates trained on high fidelity finite element simulations using adaptive
+mesh refinement with residual based error estimators, where the coupling is
+realized through a partitioned scheme with dynamic relaxation, and we further
+investigate the influence of the horizon size, the mesh density, the time step
+size, the boundary conditions, the loading rate, the temperature, and several
+other parameters on the accuracy and stability of the proposed approach, and
+moreover we discuss implementation aspects in detail including data structures,
+parallelization strategies, load balancing, and memory layout considerations,
+and finally we also report preliminary results for a number of additional test
+cases which were not the main focus of this work but which we include for
+completeness, demonstrating that the framework can in principle also be applied
+to thermo-mechanical problems, fatigue, and corrosion, although a detailed
+investigation of these topics is left for future work, since the present paper
+focuses primarily on the quasi-static regime, and the results show good
+agreement with reference solutions in most cases considered here, while we
+additionally provide an extensive discussion of the calibration procedure for
+the surrogate models, the selection of hyperparameters such as network depth,
+width, activation functions, learning rate schedules, and regularization
+strategies, the generation of training data including sampling strategies in
+parameter space, and the treatment of boundary effects near the surfaces of
+the computational domain, which require special correction procedures in
+nonlocal models, and we conclude with an outlook on possible extensions of
+the framework towards multiscale and multiphysics applications in the context
+of digital twins of engineering structures.
+\end{abstract}
+% ST-1: far beyond 250 words of technical detail, no clean problem/solution arc
+
+\section{Introduction}  % ST-2: no novelty paragraph at the end
+
+The simulation of fracture is important. In order to understand fracture,
+many methods have been developed. The results in Figure 1 show that classical
+methods have difficulties with discontinuities.  % LG-3, LG-7, TX-3 (hardcoded ref)
+
+It can be seen that peridynamics is a promising alternative. Previous studies
+have shown its potential. The method was used by many authors and it shows a
+nonlinear stress.  % LG-7 scaffolding; LG-1 "nonlinear stress" (semantic, LLM pass)
+
+The paper is organized as follows. See Figure 2 for an overview.  % LG-7
+
+\section{Methods For Peridynamic Simulation}  % LG-4 Title Case, ST-5 vs. next section
+
+% TODO: rewrite this section after Arman's comments  % TX-1
+The deformation is governed by the equation of motion, where rho denotes
+density.
+
+% Old derivation, kept just in case:
+% The bond force density f depends on the stretch s as follows.
+% f(s) = c s if s < s_c and zero otherwise, where c denotes the
+% micromodulus constant which can be calibrated against the bulk
+% modulus K of classical elasticity theory.
+% This was replaced by the state based formulation below.
+% TX-1: commented-out block
+
+We use a one dimensional model with a stress strain relation that is rate
+dependent.  % LG-5: missing hyphens (modifier use)
+
+\subsection{discretization}  % LG-4: lowercase heading start (style break, ST-5)
+
+Fig. 3 shows the discretization. The convergence is shown in Figure 4.
+% TX-2: "Fig." vs "Figure" mixed; TX-3 hardcoded
+
+\section{Results}
+
+The error decreases quickly with mesh refinement. The agreement with the
+the reference solution is excellent.  % FS-3 unquantified; LG-6 doubled "the"
+
+\begin{figure}
+  \centering
+  % \includegraphics{convergence.pdf}
+  \caption{Convergence of the proposed method for the one dimensional test
+  case described in Section 3, where the error is measured in the L2 norm
+  against the analytical solution, computed on a sequence of five uniformly
+  refined discretizations, with the horizon held fixed in physical units,
+  demonstrating second order accuracy as expected from the theory.}
+  % FG-4: caption far too long; LG-5 "one dimensional", "second order"
+  \label{fig:convergence-unused}  % FG-5: label never referenced
+\end{figure}
+
+\section{Conclusion}
+
+In order to summarize, we presented a framework.  % LG-3
+
+\end{document}

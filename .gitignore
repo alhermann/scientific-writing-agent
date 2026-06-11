@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+
+# tooling
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# editors
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+
+# local experiments
+*.local.md
+scratch/
+
+# local Claude Code permission settings — never commit
+.claude/settings.local.json
+
+# internal source documents — never publish
+reference/
