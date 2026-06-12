@@ -1,0 +1,15 @@
+Feedback on your draft (v3):
+
+1. p.3: You again use "respectively" in three consecutive sentences. This construction forces the reader to mentally unzip parallel lists - use it at most once per page, and never when the pairing is already obvious.
+
+2. p.5, Eq. 12: The units don't work out. The left side is a stress rate [MPa/s], the right side as written is [MPa]. I assume a factor 1/t_c is missing. Please check ALL equations for dimensional consistency before sending me the next version - this is the second time.
+
+3. p.7: "The model captures the experimental trend." Which trend? Captured how well? Give me a number or delete the sentence.
+
+4. p.8: The color scale of Fig. 5 goes from red to green. About 8% of male readers are red-green colorblind. Use a colorblind-safe palette (viridis or similar) in all figures, always.
+
+5. Throughout: you cite review papers for specific technical results. Cite the original work that established the result; reviews only for overviews.
+
+6. p.9: Your conclusion repeats the abstract almost verbatim. The conclusion should state what was shown and what follows from it - not re-advertise the paper.
+
+7. The acknowledgment section is missing the DFG grant number again - please copy it from the project sheet.
