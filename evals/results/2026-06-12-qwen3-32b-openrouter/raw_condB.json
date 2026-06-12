@@ -1,0 +1,112 @@
+[
+  {
+    "location": "Abstract",
+    "excerpt": "Our adaptive coupling scheme reduces the ghost-force error by two orders of magnitude compared to standard overlapping-domain approaches.",
+    "problem": "The claim is vague and lacks a specific reference or baseline for comparison. 'Standard overlapping-domain approaches' is too general and should be defined or cited."
+  },
+  {
+    "location": "Abstract",
+    "excerpt": "combined with a variable-horizon formulation in which the nonlocal weight kernel is rescaled according to the local grid spacing.",
+    "problem": "The term 'variable-horizon formulation' is introduced without a clear definition or reference. The rescaling of the nonlocal weight kernel should be explained more precisely."
+  },
+  {
+    "location": "Abstract",
+    "excerpt": "We also describe our new mesh generator and a database format for storing simulation results.",
+    "problem": "This is a side contribution that is not clearly connected to the main scientific contribution of the paper. It should be either elaborated or moved to an appendix."
+  },
+  {
+    "location": "Introduction",
+    "excerpt": "The structure of this paper is as follows.",
+    "problem": "This is a common but unnecessary phrase in scientific writing. It should be omitted or replaced with a more concise statement."
+  },
+  {
+    "location": "Coupling formulation",
+    "excerpt": "The two models are blended by a function α(x) that varies from zero to one across the transition zone of width ℓ.",
+    "problem": "The function α(x) is introduced without a mathematical definition or reference to its properties. The transition zone width ℓ should be defined more precisely."
+  },
+  {
+    "location": "Coupling formulation",
+    "excerpt": "The coupled internal force is F_int = α F^PD_int + (1−α) F^FE_int + Ψ(α, κ).",
+    "problem": "The function Ψ(α, κ) is introduced without explanation or definition. The symbol κ is not defined, and its role in the formulation is unclear."
+  },
+  {
+    "location": "Coupling formulation",
+    "excerpt": "We initially attempted to enforce the coupling by Lagrange multipliers on the interface displacements.",
+    "problem": "This is a historical account of failed approaches and should be moved to a separate section or appendix. It is not suitable for the main formulation section."
+  },
+  {
+    "location": "Coupling formulation",
+    "excerpt": "Note that the material is nonlinear up to a point, the yield strength, which is a sharp kink in the stress curve.",
+    "problem": "This statement is vague and lacks a clear connection to the coupling formulation. It should be moved to a section on material modeling or removed if irrelevant."
+  },
+  {
+    "location": "Discretization",
+    "excerpt": "The local subdomain is discretized by standard finite elements, the nonlocal subdomain by a meshfree collocation of the peridynamic equation.",
+    "problem": "The term 'meshfree collocation' is not clearly defined. The discretization of the nonlocal subdomain should be explained in more detail."
+  },
+   {
+    "location": "Discretization",
+    "excerpt": "The critical time step size follows from the smallest element and the dilatational wave speed c_d.",
+    "problem": "This is a vague statement. The relationship between the time step and the wave speed should be clarified with a formula or reference."
+  },
+  {
+    "location": "Numerical results",
+    "excerpt": "Figure 1 shows the displacement error as a function of the the grid spacing on a linear scale.",
+    "problem": "Typo: 'the the grid spacing'. Also, the convergence is described as 'very well', which is subjective and lacks quantitative support."
+  },
+  {
+    "location": "Numerical results",
+    "excerpt": "The branching pattern agrees well with the experiment.",
+    "problem": "The claim is vague and lacks quantitative validation. The experiment should be cited, and metrics for agreement should be provided."
+  },
+  {
+    "location": "Numerical results",
+    "excerpt": "Figure 2 shows the crack paths, where the simulated crack path and the experimentally observed path are plotted as two solid blue lines.",
+    "problem": "The figure description is insufficient. It should clarify which line corresponds to the simulation and which to the experiment."
+  },
+  {
+    "location": "Numerical results",
+    "excerpt": "Finally, we compare the computational cost of the coupled scheme with a fully nonlocal simulation.",
+    "problem": "The comparison is described as 'significantly faster' and 'much better accuracy', but no quantitative data is provided to support these claims."
+  },
+  {
+    "location": "Conclusion",
+    "excerpt": "The presented scheme avoids ghost forces by construction, since the blending function compensates the spurious force terms exactly.",
+    "problem": "This claim is too strong and lacks supporting evidence or references. The assertion that the blending function 'compensates exactly' is not substantiated."
+  },
+  {
+    "location": "Conclusion",
+    "excerpt": "Future work will address the extension to three dimensions, corrosion problems, fatigue, thermal coupling, contact, and the application to additively manufactured lattice structures.",
+    "problem": "This is a list of future directions that is too broad and lacks focus. It should be trimmed to only the most relevant or immediate extensions."
+  },
+  {
+    "location": "Equation (eq:blend)",
+    "excerpt": "F_int = α F^PD_int + (1−α) F^FE_int + Ψ(α, κ).",
+    "problem": "The equation is not clearly explained. The terms F^PD_int and F^FE_int should be defined, and the role of Ψ(α, κ) should be clarified."
+  },
+  {
+    "location": "Equation (eq:pd)",
+    "excerpt": "ρ ü(x,t) = ∫_{H_x} f(u'−u, x'−x) dV' + b(x,t).",
+    "problem": "The notation is inconsistent. The function f is introduced without a definition, and the integration domain H_x is not clearly defined."
+  },
+  {
+    "location": "Language and grammar",
+    "excerpt": "We also describe our new mesh generator and a database format for storing simulation results.",
+    "problem": "The use of 'our' is inappropriate in a scientific manuscript and should be removed to maintain objectivity."
+  },
+  {
+    "location": "Language and grammar",
+    "excerpt": "The agreement between the numerical and the analytical solution is excellent.",
+    "problem": "The word 'excellent' is subjective and should be replaced with quantitative metrics or error values."
+  },
+  {
+    "location": "Language and grammar",
+    "excerpt": "The branching pattern agrees well with the experiment.",
+    "problem": "The phrase 'agrees well' is vague and lacks a quantitative measure of agreement."
+  },
+  {
+    "location": "Language and grammar",
+    "excerpt": "The coupled scheme is significantly faster while the accuracy is much better than that of the overlapping Schwarz approach.",
+    "problem": "The comparison is not clearly defined. 'Significantly faster' and 'much better' are subjective and should be supported with data."
+  }
+]

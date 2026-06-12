@@ -1,0 +1,9 @@
+{
+  "condition": "B (off-the-shelf, bare prompt)",
+  "model": "qwen/qwen3-32b (no thinking, OpenRouter)",
+  "total_findings": 22,
+  "valid_extra_findings": 11,
+  "matched": ["GT-03", "GT-06", "GT-07", "GT-12", "GT-13", "GT-15", "GT-16",
+              "GT-20", "GT-24"],
+  "notes": "GT-15 and GT-24 granted generously (same location/defect family, weaker reasoning). 2 findings invalid ('our' inappropriate; organization paragraph unnecessary). Judge: ground-truth author (pilot protocol)."
+}

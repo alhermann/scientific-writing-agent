@@ -39,7 +39,11 @@ def main() -> int:
     model, manuscript, out = sys.argv[1], sys.argv[2], sys.argv[3]
     base = sys.argv[4] if len(sys.argv) > 4 else "http://localhost:11434/v1"
 
+    import os
+
     text = Path(manuscript).read_text(encoding="utf-8")
+    text += os.environ.get("SWA_PROMPT_SUFFIX", "")
+    api_key = os.environ.get("SWA_API_KEY", "ollama")
     if "11434" in base:
         # Ollama: use the native API so we can force think=false — on CPU the
         # thinking budget of reasoning models otherwise eats the completion.
@@ -63,7 +67,7 @@ def main() -> int:
         url,
         data=json.dumps(body).encode(),
         headers={"Content-Type": "application/json",
-                 "Authorization": "Bearer ollama"},
+                 "Authorization": f"Bearer {api_key}"},
     )
     with urllib.request.urlopen(req, timeout=7200) as r:
         resp = json.load(r)

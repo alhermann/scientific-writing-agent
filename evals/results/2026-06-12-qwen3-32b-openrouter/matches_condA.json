@@ -1,0 +1,10 @@
+{
+  "condition": "A (guided: lint + guidelines, LangGraph swa review)",
+  "model": "qwen/qwen3-32b (no thinking, OpenRouter)",
+  "total_findings": 43,
+  "valid_extra_findings": 16,
+  "matched": ["GT-01", "GT-02", "GT-04", "GT-05", "GT-06", "GT-07", "GT-08",
+              "GT-10", "GT-11", "GT-12", "GT-13", "GT-14", "GT-15", "GT-17",
+              "GT-18", "GT-19"],
+  "notes": "30 semantic + 13 deterministic findings. 11 judged invalid, incl. 4 hallucinated figure-caption findings (FG-4/FG-5 claim caption properties although the manuscript contains no figure environments - while the same run's not_checked list correctly declares figures unavailable), a nonsense CI-2 on the title, and fabricated section numbers in ST-5. MA category succeeded at 32B (no looping) -> GT-06 found. Judge: ground-truth author (pilot protocol)."
+}
