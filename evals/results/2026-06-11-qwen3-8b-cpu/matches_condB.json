@@ -1,0 +1,8 @@
+{
+  "condition": "B (off-the-shelf, bare prompt)",
+  "model": "qwen3:8b (no thinking, CPU, ollama)",
+  "total_findings": 31,
+  "valid_extra_findings": 20,
+  "matched": ["GT-03", "GT-06", "GT-12", "GT-13", "GT-16", "GT-20", "GT-23"],
+  "notes": "8 of 31 findings are verbatim duplicates; 4 judged invalid/pedantic. GT-03 and GT-20 granted generously (same location+defect family, different reasoning). Judge: ground-truth author (pilot protocol)."
+}

@@ -69,9 +69,18 @@ CATEGORY_ORDER = ["SL", "ST", "MA", "FS", "FG", "LG", "CI", "TX", "WF"]
 _MAX_MANUSCRIPT_CHARS = 120_000  # ~30k tokens; truncate beyond with a notice
 
 
+def _suffix(prompt: str) -> str:
+    """Append SWA_PROMPT_SUFFIX to every prompt (e.g. '/no_think' to disable
+    qwen3 thinking mode on slow hardware)."""
+    return prompt + os.environ.get("SWA_PROMPT_SUFFIX", "")
+
+
 def _llm():
     model = os.environ.get("SWA_MODEL", "anthropic:claude-sonnet-4-6")
-    kwargs: dict = {"temperature": 0}
+    # Cap generation: small models can loop in constrained-JSON mode; without
+    # a cap they burn the whole context (and hours of CPU) before failing.
+    kwargs: dict = {"temperature": 0,
+                    "max_tokens": int(os.environ.get("SWA_MAX_TOKENS", "6000"))}
     if os.environ.get("SWA_BASE_URL"):
         kwargs["base_url"] = os.environ["SWA_BASE_URL"]
     if os.environ.get("SWA_API_KEY"):
@@ -139,8 +148,16 @@ rendered figures), list its ID under not_checked with a reason.
 
 {_manuscript_context(state['manuscript_path'])}
 """
-    review = llm.invoke(prompt)
-    result = review.model_dump() if hasattr(review, "model_dump") else dict(review)
+    # Fault isolation: one failing category (model loops, schema mismatch,
+    # endpoint hiccup) must not destroy the rest of the review.
+    try:
+        review = llm.invoke(_suffix(prompt))
+        result = (review.model_dump() if hasattr(review, "model_dump")
+                  else dict(review))
+    except Exception as e:  # noqa: BLE001 — recorded, not swallowed
+        result = {"findings": [],
+                  "not_checked": [f"all {category} rules: review call failed "
+                                  f"({type(e).__name__}: {str(e)[:200]})"]}
     result["category"] = category
     return {
         "pending_categories": state["pending_categories"][1:],
@@ -181,11 +198,11 @@ def synthesize(state: ReviewState) -> ReviewState:
 
     # executive summary on top, written by the LLM from the findings
     body = "\n".join(sections)
-    summary = _llm().invoke(
+    summary = _llm().invoke(_suffix(
         "Write a 5-10 line executive summary of this manuscript review for "
         "the author: overall assessment, then the three highest-impact "
         "improvements as a numbered list. Be direct and specific; no praise "
-        "padding. Review:\n\n" + body[:40_000]
+        "padding. Review:\n\n" + body[:40_000])
     ).content
     report = body.replace(
         "## Semantic findings",
@@ -225,7 +242,7 @@ def distill(state: DistillState) -> DistillState:
                    + _manuscript_context(state["manuscript_path"])[:40_000])
 
     llm = _llm().with_structured_output(Distillation)
-    result = llm.invoke(f"""You distill manuscript feedback into reusable \
+    result = llm.invoke(_suffix(f"""You distill manuscript feedback into reusable \
 writing guidelines for a research group (the learning loop of our writing \
 agent).
 
@@ -267,7 +284,7 @@ TX (LaTeX), WF (workflow), FS (field-specific mechanics). Keep the literal \
 
 {state['feedback_text']}
 {context}
-""")
+"""))
     dump = result.model_dump() if hasattr(result, "model_dump") else dict(result)
     return {"distillation": dump}
 
