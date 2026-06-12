@@ -1,0 +1,10 @@
+{
+  "condition": "A (guided: lint + guidelines, LangGraph swa review)",
+  "model": "qwen3:8b (no thinking, CPU, ollama)",
+  "total_findings": 40,
+  "valid_extra_findings": 17,
+  "matched": ["GT-01", "GT-02", "GT-03", "GT-04", "GT-05", "GT-07", "GT-08",
+              "GT-10", "GT-11", "GT-12", "GT-13", "GT-14", "GT-15", "GT-17",
+              "GT-18", "GT-19", "GT-23"],
+  "notes": "27 semantic + 13 deterministic findings. 6 judged invalid (1 hallucinated redundancy, WF-2 meta-finding, 2 pedantic, 2 misdirected CI-3). MA category review failed (model loops on it) -> GT-06/09/24 unreachable. Judge: ground-truth author (pilot protocol)."
+}
